@@ -1,0 +1,18 @@
+canvas {
+    position: absolute;
+    top: 220px;
+    left: 230px;
+}
+
+body {
+    background-color: black;
+}
+
+.frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 1152px;
+    height: 950px;
+}
