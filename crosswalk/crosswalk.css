@@ -16,3 +16,9 @@ body {
     width: 1152px;
     height: 950px;
 }
+
+.music {
+    position: absolute;
+    top: 960px;
+    left: 0px;
+}
