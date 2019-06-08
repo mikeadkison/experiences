@@ -3,21 +3,21 @@
 <!-- / todo: alternate between adding cool trippy effects and making art
 / ideas: fancy musem frames around games ( intricate and hand-made,not just photos), weird canvs sizes and ratios, float planes flying in, links to other gmaes embedded in games 
 multiple tiny phaser canvases per page with cute little ai making the page magical and alive-->
-<!-- todo: enforce a pixel grid system based on the pixel scaling -->
-<!-- idea: clouds that move vertically instead of horizontally or arrang eto form shape -->
+<!-- idea: clouds that move vertically instead of horizontally or arrang eto form shape and move out and get smaller-->
 <!-- clouds further away should move slower in 2d -->
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.17.0/dist/phaser-arcade-physics.min.js"></script>
     <link rel="stylesheet" href="crosswalk.css">
 </head>
 <body>
-    <img class="frame" src="frame.png">
+    <!-- <img class="frame" src="frame.png"> -->
+    <div id="crosswalk"></div>
     <script>
     var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 160,
+        height: 120,
         physics: {
             default: 'arcade',
             arcade: {
@@ -29,7 +29,12 @@ multiple tiny phaser canvases per page with cute little ai making the page magic
             create: create,
             update: update
         },
-        pixelArt: true
+        scale: {
+            mode: Phaser.Scale.FIT,
+        },
+        parent: 'crosswalk',
+
+        pixelArt: true,
     };
 
     var game = new Phaser.Game(config);
@@ -42,17 +47,19 @@ multiple tiny phaser canvases per page with cute little ai making the page magic
         this.load.image('signal', 'signal.png');
         this.load.image('background', 'background.png');
         this.load.image('cloud0', 'cloud0.png');
+        this.load.image('noParking', 'noParking.png');
         this.load.spritesheet('signalSheet', 'signal.png', {frameWidth: 16, frameHeight: 49})
     }
 
     function create ()
     {
         this.cameras.main.backgroundColor.setTo(100,150,229);
-        cloud0 = scale(this.add.sprite(180, 170, 'cloud0'));
+        cloud0 = this.add.sprite(40, 40, 'cloud0');
         var backgroundImage = this.add.sprite(gameWidth / 2, gameHeight / 2, 'background');
         backgroundImage.displayWidth = gameWidth;
         backgroundImage.scaleY = backgroundImage.scaleX;
-        var signalSprite = scale(this.add.sprite(400, 200, 'signalSheet'));
+        var signalSprite = this.add.sprite(83, 40, 'signalSheet');
+        var noParkingSprite = this.add.sprite(127, 47, 'noParking');
         
 
         this.anims.create({
@@ -65,16 +72,10 @@ multiple tiny phaser canvases per page with cute little ai making the page magic
     }
 
     function update (time, delta) {
-        cloud0.x += .005 * delta;
-        if (cloud0.x > 1000) {
-            cloud0.x = -100;
+        cloud0.x += .001 * delta;
+        if (cloud0.x > gameWidth) {
+            cloud0.x = -50;
         }
-    }
-
-    function scale(thing) {
-        thing.scaleX = 5;
-        thing.scaleY = thing.scaleX;
-        return thing;
     }
     </script>
 
